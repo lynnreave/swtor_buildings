@@ -1,0 +1,665 @@
+###############################
+### Habitability Buildings ####
+###############################
+
+#Asteroid and barren planet support system
+building_life_support_system = {
+	base_buildtime = 90
+	planet_unique = yes
+
+	cost = {
+		minerals = 150
+	}
+
+	potential = {
+		planet = {
+			is_planet_class = pc_asteroid
+		}
+	}
+
+	allow = {
+		planet = {
+			is_planet_class = pc_asteroid
+		}
+	}
+
+	required_resources = {
+		energy = 3
+	}
+
+	produced_resources = {
+		food = 2
+	}
+
+	planet_modifier = {
+		pop_environment_tolerance = 0.60
+		pop_growth_speed = 0.1
+	}
+
+	prerequisites = {
+		"tech_offworld_habitats"
+	}
+}
+
+#support system for molten and toxis
+building_hazardous_life_support_system = {
+	base_buildtime = 90
+	planet_unique = yes
+
+	cost = {
+		minerals = 150
+	}
+
+	potential = {
+		planet = {
+			is_planet_class = pc_molten
+		}
+	}
+
+	allow = {
+		planet = {
+			is_planet_class = pc_molten
+		}
+	}
+
+	required_resources = {
+		energy = 3
+	}
+
+	produced_resources = {
+		food = 2
+	}
+
+	planet_modifier = {
+		pop_environment_tolerance = 0.60
+		pop_growth_speed = 0.2
+	}
+
+	prerequisites = {
+		"tech_hazardous_habitats"
+	}
+}
+
+
+
+ ####################################
+ # Force Buildings
+ ####################################
+
+building_force_library = {
+	base_buildtime = @b1time
+	planet_unique = yes
+	cost = {
+		minerals = @b1cost
+	}
+
+	country_modifier = {
+		all_technology_research_speed = 0.10
+		category_force_research_speed_mult = 0.10
+	}
+
+	required_resources = {
+		energy = @b1upkeep
+	}
+
+	upgrades = {
+		building_force_great_library
+	}
+
+	potential = {
+		planet = {
+			NOT = {
+				has_building = building_force_great_library
+
+			}
+		}
+	}
+	prerequisites = {
+		"tech_force_I"
+	}
+
+	}
+
+
+building_force_great_library = {
+	base_buildtime = @b1time
+	empire_unique = yes
+	is_listed = no
+	cost = {
+		minerals = @b1cost
+	}
+
+	allow = {
+		custom_tooltip = {
+			text = "building_force_library"
+			planet = {
+				OR = {
+					has_building = "building_force_library"
+									}
+			}
+		}
+	}
+
+	country_modifier = {
+		all_technology_research_speed = 0.15
+		category_force_research_speed_mult = 0.25
+	}
+
+	required_resources = {
+		energy = @b1upkeep
+	}
+
+	upgrades = {
+
+	}
+
+	prerequisites = {
+		"tech_force_III"
+	}
+	}
+
+building_force_academy = {
+	base_buildtime = 360
+	planet_unique = yes
+
+	cost = {
+		minerals = 150
+	}
+
+
+
+	required_resources = {
+		energy = 1
+	}
+
+	army_modifier = {
+		army_damage_mult = 0.10
+		army_health = 0.05
+	}
+
+
+	prerequisites = {
+		"tech_force_I"
+	}
+
+
+	upgrades = {
+		building_force_great_academy
+	}
+
+
+
+
+	ai_weight = {
+		weight = 5000
+		modifier = {
+			weight = 0
+			from = {
+				sector_controlled = yes
+				NOT = { has_building = building_force_academy }
+			}
+		}
+	}
+}
+
+building_force_great_academy  = {
+
+	base_buildtime = 360
+	empire_unique = yes
+
+	cost = {
+		minerals = 150
+	}
+
+	allow = {
+		custom_tooltip = {
+			text = "building_force_academy"
+			planet = {
+				OR = {
+					has_building = "building_force_academy"
+									}
+			}
+		}
+	}
+
+	army_modifier = {
+
+		army_damage_mult = 0.10
+		army_health = 0.05
+	}
+	planet_modifier = {
+
+		pop_government_ethic_attraction = -0.5
+		tile_resource_society_research_mult = 0.15
+
+	}
+	country_modifier = {
+		category_force_research_speed_mult = 0.10
+	}
+
+	required_resources = {
+		energy = 1
+	}
+
+	army_modifier = {
+		army_damage_mult = 0.20
+	}
+
+
+	prerequisites = {
+		"tech_force_III"
+	}
+
+	ai_allow = {
+		NOT = {
+			fromfrom = {
+				any_owned_planet = {
+					any_tile = {
+						has_building = building_force_great_academy
+					}
+				}
+			}
+		}
+	}
+
+	ai_weight = {
+		weight = 5000
+		modifier = {
+			weight = 0
+			from = {
+				sector_controlled = yes
+				NOT = { has_building = building_force_great_academy }
+			}
+		}
+	}
+}
+
+building_force_tomb = {
+	base_buildtime = @b0time
+	planet_unique = yes
+	requires_pop = no
+
+	cost = {
+		minerals = @b0cost
+	}
+
+
+	planet_modifier = {
+		pop_government_ethic_attraction = -0.5
+	}
+
+	prerequisites = {
+		"tech_force_II"
+	}
+
+	upgrades = {
+		building_force_great_tomb
+	}
+
+	ai_weight = {
+		weight = 7000
+		modifier = {
+			weight = 0
+			from = {
+				happiness_planet > 0.90
+
+			}
+		}
+	}
+
+	ai_replace = no
+
+}
+
+building_force_great_tomb = {
+	base_buildtime = @b0time
+	empire_unique = yes
+	requires_pop = no
+	is_listed = no
+	cost = {
+		minerals = @b0cost
+	}
+
+		allow = {
+		custom_tooltip = {
+			text = "building_force_tomb"
+			planet = {
+				OR = {
+					has_building = "building_force_tomb"
+									}
+			}
+		}
+	}
+	planet_modifier = {
+		pop_happiness = 0.10
+		pop_government_ethic_attraction = -0.5
+	}
+
+	country_modifier = {
+	category_psionics_research_speed_mult = 0.10
+	category_force_research_speed_mult = 0.10
+	}
+
+	prerequisites = {
+		"tech_force_III"
+	}
+
+	ai_weight = {
+		weight = 7000
+		modifier = {
+			weight = 0
+			from = {
+				happiness_planet > 0.90
+
+			}
+		}
+	}
+
+	ai_replace = no
+
+}
+
+
+building_andeddu_keep = {
+	base_buildtime = 100
+	planet_unique = yes
+	requires_pop = no
+	is_listed = no
+
+	cost = {
+		minerals = @b0cost
+	}
+
+
+	planet_modifier = {
+		pop_ethic_dark_side_attraction_mult = 0.50
+		pop_happiness = -0.15
+		pop_government_ethic_attraction = -0.5
+		planet_migration_all_pull = -1.0
+		tile_resource_minerals_mult = -0.5
+		tile_resource_energy_mult = -0.5
+		tile_resource_food_mult = -0.5
+		}
+	country_modifier = {
+		category_psionics_research_speed_mult = 0.50
+		category_force_research_speed_mult = 0.50
+		country_society_tech_research_speed = 0.15
+	}
+
+
+
+	ai_replace = no
+
+}
+
+building_sith_pyramid = {
+	base_buildtime = 100
+	planet_unique = yes
+	requires_pop = no
+	is_listed = no
+
+	cost = {
+		minerals = @b0cost
+	}
+
+
+	planet_modifier = {
+		pop_ethic_dark_side_attraction_mult = 0.50
+		pop_happiness = -0.15
+		pop_government_ethic_attraction = -0.5
+		planet_migration_all_pull = -1.0
+		tile_resource_minerals_mult = -0.5
+		tile_resource_energy_mult = -0.5
+		tile_resource_food_mult = -0.5
+		}
+
+	country_modifier = {
+		category_psionics_research_speed_mult = 0.50
+		category_force_research_speed_mult = 0.50
+		country_society_tech_research_speed = 0.15
+	}
+
+	ai_replace = no
+
+}
+
+ ####################################
+ # Defensive Buildings
+ ####################################
+
+
+building_turbolaser_central_command = {
+	requires_pop = no
+	base_buildtime = 360
+	defense_armies = 5
+
+	cost = {
+		minerals = 350
+
+	}
+
+	planet_unique = yes
+	level = 1
+
+	army_modifier = {
+		army_health = 0.1
+	}
+
+
+
+
+	prerequisites = {
+		 "tech_advanced_target_tracking"
+	}
+	ai_replace = no
+}
+
+
+building_magnapulse_canon = {
+	requires_pop = no
+	base_buildtime = 360
+	defense_armies = 2
+
+	cost = {
+		minerals = 350
+
+	}
+
+	planet_unique = yes
+	level = 1
+
+
+	prerequisites = {
+		 "tech_heavy_plasma_ballistics"
+	}
+	ai_replace = no
+}
+
+building_starfighter_hangar = {
+	requires_pop = no
+	base_buildtime = 360
+	defense_armies = 5
+
+	cost = {
+		minerals = 350
+
+	}
+
+	level = 1
+
+	army_modifier = {
+		army_health = 0.1
+	}
+
+
+
+
+	prerequisites = {
+		 "tech_atmospheric_starfighter_support"
+	}
+	ai_replace = no
+}
+
+
+building_planetary_citadel = {
+
+	base_buildtime = 360
+	defense_armies = 10
+
+	cost = {
+		minerals = 350
+
+	}
+
+	planet_unique = yes
+	level = 1
+
+	army_modifier = {
+		army_defense_damage_mult = 0.1
+	}
+
+
+
+
+	prerequisites = {
+		 "tech_colonization_1"
+	}
+	ai_replace = no
+}
+
+
+ ####################################
+ # Misc Buildings
+ ####################################
+
+building_communications_array = {
+	base_buildtime = 100
+	planet_unique = yes
+	requires_pop = yes
+	is_listed = yes
+
+	cost = {
+		minerals = @b0cost
+	}
+
+	country_modifier = {
+
+		pop_migration_speed = 0.10
+		#planet_sensor_range_mult = 1.0
+		}
+
+	ai_replace = no
+
+}
+building_military_intelligence_hq = {
+	base_buildtime = 100
+	planet_unique = yes
+	requires_pop = yes
+	is_listed = yes
+
+	cost = {
+		minerals = @b0cost
+	}
+	produced_resources = {
+			influence = 1
+			society_research = 2
+		}
+
+	planet_modifier = {
+		planet_migration_xeno_pull = -0.1
+		pop_government_ethic_attraction = 0.20
+		#planet_sensor_range_mult = 0.1
+
+	}
+	country_modifier = {
+		category_military_theory_research_speed_mult = 0.50
+		}
+
+	ai_replace = no
+
+}
+
+
+
+
+ ####################################
+ # Fallen Empire Buildings
+ ####################################
+
+building_planet_border_reducer_125 = {
+	is_listed = no
+	base_buildtime = 360
+
+	cost = {
+		minerals = 350
+	}
+
+	#planet_modifier = {
+	#	planet_border_mult = -1.25
+	#}
+
+	prerequisites = {
+	}
+
+
+	ai_replace = no
+}
+
+
+#Border Reducer -125% (To prevent blocking of hyperlanes)
+building_border_reducer_125 = {
+	is_listed = no
+	base_buildtime = 360
+
+	cost = {
+		minerals = 350
+	}
+
+	#country_modifier = {
+	#	country_border_mult = -1.25
+	#}
+
+	prerequisites = {
+	}
+
+
+	ai_replace = no
+}
+
+#Border Reducer -100% (To prevent blocking of hyperlanes)
+building_border_reducer_100 = {
+	is_listed = no
+	base_buildtime = 360
+
+	cost = {
+		minerals = 350
+	}
+
+	#country_modifier = {
+	#	country_border_mult = -1.0
+	#}
+
+	prerequisites = {
+	}
+
+	ai_replace = no
+}
+
+#Border Reducer -75% (To prevent blocking of hyperlanes)
+building_border_reducer_75 = {
+	is_listed = no
+	base_buildtime = 360
+
+	cost = {
+		minerals = 350
+	}
+
+	#country_modifier = {
+	#	country_border_mult = -0.75
+	#}
+
+	prerequisites = {
+	}
+
+	ai_replace = no
+}
